@@ -1,0 +1,27 @@
+{
+  "applications": "*",
+  "changelogDate": "20221202072125",
+  "clientRootFolder": "servicebos",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "currencies",
+  "fields": [
+    {
+      "fieldName": "currencyName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "currencyCode",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "servicebos",
+  "name": "Currencies",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

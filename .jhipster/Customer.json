@@ -1,0 +1,27 @@
+{
+  "applications": "*",
+  "changelogDate": "20221202072124",
+  "clientRootFolder": "servicebos",
+  "databaseType": "mongodb",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "customer",
+  "fields": [
+    {
+      "fieldName": "customerLegalEntity",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "customerHashCode",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "microserviceName": "servicebos",
+  "name": "Customer",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}
