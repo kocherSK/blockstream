@@ -145,6 +145,9 @@ public class SmartTradeResource {
                 if (smartTrade.getTransactionId() != null) {
                     existingSmartTrade.setTransactionId(smartTrade.getTransactionId());
                 }
+                if (smartTrade.getDirection() != null) {
+                    existingSmartTrade.setDirection(smartTrade.getDirection());
+                }
 
                 return existingSmartTrade;
             })

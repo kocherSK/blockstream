@@ -54,6 +54,9 @@ class SmartTradeResourceIT {
     private static final String DEFAULT_TRANSACTION_ID = "AAAAAAAAAA";
     private static final String UPDATED_TRANSACTION_ID = "BBBBBBBBBB";
 
+    private static final String DEFAULT_DIRECTION = "AAAAAAAAAA";
+    private static final String UPDATED_DIRECTION = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/smart-trades";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -80,7 +83,8 @@ class SmartTradeResourceIT {
             .amount(DEFAULT_AMOUNT)
             .contraAmount(DEFAULT_CONTRA_AMOUNT)
             .valueDate(DEFAULT_VALUE_DATE)
-            .transactionId(DEFAULT_TRANSACTION_ID);
+            .transactionId(DEFAULT_TRANSACTION_ID)
+            .direction(DEFAULT_DIRECTION);
         return smartTrade;
     }
 
@@ -99,7 +103,8 @@ class SmartTradeResourceIT {
             .amount(UPDATED_AMOUNT)
             .contraAmount(UPDATED_CONTRA_AMOUNT)
             .valueDate(UPDATED_VALUE_DATE)
-            .transactionId(UPDATED_TRANSACTION_ID);
+            .transactionId(UPDATED_TRANSACTION_ID)
+            .direction(UPDATED_DIRECTION);
         return smartTrade;
     }
 
@@ -129,6 +134,7 @@ class SmartTradeResourceIT {
         assertThat(testSmartTrade.getContraAmount()).isEqualByComparingTo(DEFAULT_CONTRA_AMOUNT);
         assertThat(testSmartTrade.getValueDate()).isEqualTo(DEFAULT_VALUE_DATE);
         assertThat(testSmartTrade.getTransactionId()).isEqualTo(DEFAULT_TRANSACTION_ID);
+        assertThat(testSmartTrade.getDirection()).isEqualTo(DEFAULT_DIRECTION);
     }
 
     @Test
@@ -166,7 +172,8 @@ class SmartTradeResourceIT {
             .andExpect(jsonPath("$.[*].amount").value(hasItem(sameNumber(DEFAULT_AMOUNT))))
             .andExpect(jsonPath("$.[*].contraAmount").value(hasItem(sameNumber(DEFAULT_CONTRA_AMOUNT))))
             .andExpect(jsonPath("$.[*].valueDate").value(hasItem(DEFAULT_VALUE_DATE.toString())))
-            .andExpect(jsonPath("$.[*].transactionId").value(hasItem(DEFAULT_TRANSACTION_ID)));
+            .andExpect(jsonPath("$.[*].transactionId").value(hasItem(DEFAULT_TRANSACTION_ID)))
+            .andExpect(jsonPath("$.[*].direction").value(hasItem(DEFAULT_DIRECTION)));
     }
 
     @Test
@@ -187,7 +194,8 @@ class SmartTradeResourceIT {
             .andExpect(jsonPath("$.amount").value(sameNumber(DEFAULT_AMOUNT)))
             .andExpect(jsonPath("$.contraAmount").value(sameNumber(DEFAULT_CONTRA_AMOUNT)))
             .andExpect(jsonPath("$.valueDate").value(DEFAULT_VALUE_DATE.toString()))
-            .andExpect(jsonPath("$.transactionId").value(DEFAULT_TRANSACTION_ID));
+            .andExpect(jsonPath("$.transactionId").value(DEFAULT_TRANSACTION_ID))
+            .andExpect(jsonPath("$.direction").value(DEFAULT_DIRECTION));
     }
 
     @Test
@@ -213,7 +221,8 @@ class SmartTradeResourceIT {
             .amount(UPDATED_AMOUNT)
             .contraAmount(UPDATED_CONTRA_AMOUNT)
             .valueDate(UPDATED_VALUE_DATE)
-            .transactionId(UPDATED_TRANSACTION_ID);
+            .transactionId(UPDATED_TRANSACTION_ID)
+            .direction(UPDATED_DIRECTION);
 
         restSmartTradeMockMvc
             .perform(
@@ -235,6 +244,7 @@ class SmartTradeResourceIT {
         assertThat(testSmartTrade.getContraAmount()).isEqualByComparingTo(UPDATED_CONTRA_AMOUNT);
         assertThat(testSmartTrade.getValueDate()).isEqualTo(UPDATED_VALUE_DATE);
         assertThat(testSmartTrade.getTransactionId()).isEqualTo(UPDATED_TRANSACTION_ID);
+        assertThat(testSmartTrade.getDirection()).isEqualTo(UPDATED_DIRECTION);
     }
 
     @Test
@@ -323,6 +333,7 @@ class SmartTradeResourceIT {
         assertThat(testSmartTrade.getContraAmount()).isEqualByComparingTo(UPDATED_CONTRA_AMOUNT);
         assertThat(testSmartTrade.getValueDate()).isEqualTo(DEFAULT_VALUE_DATE);
         assertThat(testSmartTrade.getTransactionId()).isEqualTo(DEFAULT_TRANSACTION_ID);
+        assertThat(testSmartTrade.getDirection()).isEqualTo(DEFAULT_DIRECTION);
     }
 
     @Test
@@ -344,7 +355,8 @@ class SmartTradeResourceIT {
             .amount(UPDATED_AMOUNT)
             .contraAmount(UPDATED_CONTRA_AMOUNT)
             .valueDate(UPDATED_VALUE_DATE)
-            .transactionId(UPDATED_TRANSACTION_ID);
+            .transactionId(UPDATED_TRANSACTION_ID)
+            .direction(UPDATED_DIRECTION);
 
         restSmartTradeMockMvc
             .perform(
@@ -366,6 +378,7 @@ class SmartTradeResourceIT {
         assertThat(testSmartTrade.getContraAmount()).isEqualByComparingTo(UPDATED_CONTRA_AMOUNT);
         assertThat(testSmartTrade.getValueDate()).isEqualTo(UPDATED_VALUE_DATE);
         assertThat(testSmartTrade.getTransactionId()).isEqualTo(UPDATED_TRANSACTION_ID);
+        assertThat(testSmartTrade.getDirection()).isEqualTo(UPDATED_DIRECTION);
     }
 
     @Test
