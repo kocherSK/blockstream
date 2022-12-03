@@ -24,6 +24,7 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "customerHashCode",
       "otherEntityName": "customer",
       "otherEntityRelationshipName": "wallet",
       "ownerSide": true,

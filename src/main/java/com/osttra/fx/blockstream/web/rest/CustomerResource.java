@@ -121,8 +121,14 @@ public class CustomerResource {
         Optional<Customer> result = customerRepository
             .findById(customer.getId())
             .map(existingCustomer -> {
+                if (customer.getCustomerName() != null) {
+                    existingCustomer.setCustomerName(customer.getCustomerName());
+                }
                 if (customer.getCustomerLegalEntity() != null) {
                     existingCustomer.setCustomerLegalEntity(customer.getCustomerLegalEntity());
+                }
+                if (customer.getCustomerPassword() != null) {
+                    existingCustomer.setCustomerPassword(customer.getCustomerPassword());
                 }
                 if (customer.getCustomerHashCode() != null) {
                     existingCustomer.setCustomerHashCode(customer.getCustomerHashCode());

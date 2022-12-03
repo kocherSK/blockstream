@@ -26,8 +26,14 @@ import org.springframework.test.web.servlet.MockMvc;
 @WithMockUser
 class CustomerResourceIT {
 
+    private static final String DEFAULT_CUSTOMER_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_CUSTOMER_NAME = "BBBBBBBBBB";
+
     private static final String DEFAULT_CUSTOMER_LEGAL_ENTITY = "AAAAAAAAAA";
     private static final String UPDATED_CUSTOMER_LEGAL_ENTITY = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CUSTOMER_PASSWORD = "AAAAAAAAAA";
+    private static final String UPDATED_CUSTOMER_PASSWORD = "BBBBBBBBBB";
 
     private static final String DEFAULT_CUSTOMER_HASH_CODE = "AAAAAAAAAA";
     private static final String UPDATED_CUSTOMER_HASH_CODE = "BBBBBBBBBB";
@@ -50,7 +56,11 @@ class CustomerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Customer createEntity() {
-        Customer customer = new Customer().customerLegalEntity(DEFAULT_CUSTOMER_LEGAL_ENTITY).customerHashCode(DEFAULT_CUSTOMER_HASH_CODE);
+        Customer customer = new Customer()
+            .customerName(DEFAULT_CUSTOMER_NAME)
+            .customerLegalEntity(DEFAULT_CUSTOMER_LEGAL_ENTITY)
+            .customerPassword(DEFAULT_CUSTOMER_PASSWORD)
+            .customerHashCode(DEFAULT_CUSTOMER_HASH_CODE);
         return customer;
     }
 
@@ -61,7 +71,11 @@ class CustomerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Customer createUpdatedEntity() {
-        Customer customer = new Customer().customerLegalEntity(UPDATED_CUSTOMER_LEGAL_ENTITY).customerHashCode(UPDATED_CUSTOMER_HASH_CODE);
+        Customer customer = new Customer()
+            .customerName(UPDATED_CUSTOMER_NAME)
+            .customerLegalEntity(UPDATED_CUSTOMER_LEGAL_ENTITY)
+            .customerPassword(UPDATED_CUSTOMER_PASSWORD)
+            .customerHashCode(UPDATED_CUSTOMER_HASH_CODE);
         return customer;
     }
 
@@ -83,7 +97,9 @@ class CustomerResourceIT {
         List<Customer> customerList = customerRepository.findAll();
         assertThat(customerList).hasSize(databaseSizeBeforeCreate + 1);
         Customer testCustomer = customerList.get(customerList.size() - 1);
+        assertThat(testCustomer.getCustomerName()).isEqualTo(DEFAULT_CUSTOMER_NAME);
         assertThat(testCustomer.getCustomerLegalEntity()).isEqualTo(DEFAULT_CUSTOMER_LEGAL_ENTITY);
+        assertThat(testCustomer.getCustomerPassword()).isEqualTo(DEFAULT_CUSTOMER_PASSWORD);
         assertThat(testCustomer.getCustomerHashCode()).isEqualTo(DEFAULT_CUSTOMER_HASH_CODE);
     }
 
@@ -115,7 +131,9 @@ class CustomerResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(customer.getId())))
+            .andExpect(jsonPath("$.[*].customerName").value(hasItem(DEFAULT_CUSTOMER_NAME)))
             .andExpect(jsonPath("$.[*].customerLegalEntity").value(hasItem(DEFAULT_CUSTOMER_LEGAL_ENTITY)))
+            .andExpect(jsonPath("$.[*].customerPassword").value(hasItem(DEFAULT_CUSTOMER_PASSWORD)))
             .andExpect(jsonPath("$.[*].customerHashCode").value(hasItem(DEFAULT_CUSTOMER_HASH_CODE)));
     }
 
@@ -130,7 +148,9 @@ class CustomerResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(customer.getId()))
+            .andExpect(jsonPath("$.customerName").value(DEFAULT_CUSTOMER_NAME))
             .andExpect(jsonPath("$.customerLegalEntity").value(DEFAULT_CUSTOMER_LEGAL_ENTITY))
+            .andExpect(jsonPath("$.customerPassword").value(DEFAULT_CUSTOMER_PASSWORD))
             .andExpect(jsonPath("$.customerHashCode").value(DEFAULT_CUSTOMER_HASH_CODE));
     }
 
@@ -149,7 +169,11 @@ class CustomerResourceIT {
 
         // Update the customer
         Customer updatedCustomer = customerRepository.findById(customer.getId()).get();
-        updatedCustomer.customerLegalEntity(UPDATED_CUSTOMER_LEGAL_ENTITY).customerHashCode(UPDATED_CUSTOMER_HASH_CODE);
+        updatedCustomer
+            .customerName(UPDATED_CUSTOMER_NAME)
+            .customerLegalEntity(UPDATED_CUSTOMER_LEGAL_ENTITY)
+            .customerPassword(UPDATED_CUSTOMER_PASSWORD)
+            .customerHashCode(UPDATED_CUSTOMER_HASH_CODE);
 
         restCustomerMockMvc
             .perform(
@@ -163,7 +187,9 @@ class CustomerResourceIT {
         List<Customer> customerList = customerRepository.findAll();
         assertThat(customerList).hasSize(databaseSizeBeforeUpdate);
         Customer testCustomer = customerList.get(customerList.size() - 1);
+        assertThat(testCustomer.getCustomerName()).isEqualTo(UPDATED_CUSTOMER_NAME);
         assertThat(testCustomer.getCustomerLegalEntity()).isEqualTo(UPDATED_CUSTOMER_LEGAL_ENTITY);
+        assertThat(testCustomer.getCustomerPassword()).isEqualTo(UPDATED_CUSTOMER_PASSWORD);
         assertThat(testCustomer.getCustomerHashCode()).isEqualTo(UPDATED_CUSTOMER_HASH_CODE);
     }
 
@@ -231,7 +257,7 @@ class CustomerResourceIT {
         Customer partialUpdatedCustomer = new Customer();
         partialUpdatedCustomer.setId(customer.getId());
 
-        partialUpdatedCustomer.customerLegalEntity(UPDATED_CUSTOMER_LEGAL_ENTITY);
+        partialUpdatedCustomer.customerName(UPDATED_CUSTOMER_NAME);
 
         restCustomerMockMvc
             .perform(
@@ -245,7 +271,9 @@ class CustomerResourceIT {
         List<Customer> customerList = customerRepository.findAll();
         assertThat(customerList).hasSize(databaseSizeBeforeUpdate);
         Customer testCustomer = customerList.get(customerList.size() - 1);
-        assertThat(testCustomer.getCustomerLegalEntity()).isEqualTo(UPDATED_CUSTOMER_LEGAL_ENTITY);
+        assertThat(testCustomer.getCustomerName()).isEqualTo(UPDATED_CUSTOMER_NAME);
+        assertThat(testCustomer.getCustomerLegalEntity()).isEqualTo(DEFAULT_CUSTOMER_LEGAL_ENTITY);
+        assertThat(testCustomer.getCustomerPassword()).isEqualTo(DEFAULT_CUSTOMER_PASSWORD);
         assertThat(testCustomer.getCustomerHashCode()).isEqualTo(DEFAULT_CUSTOMER_HASH_CODE);
     }
 
@@ -260,7 +288,11 @@ class CustomerResourceIT {
         Customer partialUpdatedCustomer = new Customer();
         partialUpdatedCustomer.setId(customer.getId());
 
-        partialUpdatedCustomer.customerLegalEntity(UPDATED_CUSTOMER_LEGAL_ENTITY).customerHashCode(UPDATED_CUSTOMER_HASH_CODE);
+        partialUpdatedCustomer
+            .customerName(UPDATED_CUSTOMER_NAME)
+            .customerLegalEntity(UPDATED_CUSTOMER_LEGAL_ENTITY)
+            .customerPassword(UPDATED_CUSTOMER_PASSWORD)
+            .customerHashCode(UPDATED_CUSTOMER_HASH_CODE);
 
         restCustomerMockMvc
             .perform(
@@ -274,7 +306,9 @@ class CustomerResourceIT {
         List<Customer> customerList = customerRepository.findAll();
         assertThat(customerList).hasSize(databaseSizeBeforeUpdate);
         Customer testCustomer = customerList.get(customerList.size() - 1);
+        assertThat(testCustomer.getCustomerName()).isEqualTo(UPDATED_CUSTOMER_NAME);
         assertThat(testCustomer.getCustomerLegalEntity()).isEqualTo(UPDATED_CUSTOMER_LEGAL_ENTITY);
+        assertThat(testCustomer.getCustomerPassword()).isEqualTo(UPDATED_CUSTOMER_PASSWORD);
         assertThat(testCustomer.getCustomerHashCode()).isEqualTo(UPDATED_CUSTOMER_HASH_CODE);
     }
 

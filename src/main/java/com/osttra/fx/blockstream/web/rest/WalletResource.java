@@ -136,12 +136,13 @@ public class WalletResource {
     /**
      * {@code GET  /wallets} : get all the wallets.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of wallets in body.
      */
     @GetMapping("/wallets")
-    public List<Wallet> getAllWallets() {
+    public List<Wallet> getAllWallets(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Wallets");
-        return walletRepository.findAll();
+        return walletRepository.findAllWithEagerRelationships();
     }
 
     /**
@@ -153,7 +154,7 @@ public class WalletResource {
     @GetMapping("/wallets/{id}")
     public ResponseEntity<Wallet> getWallet(@PathVariable String id) {
         log.debug("REST request to get Wallet : {}", id);
-        Optional<Wallet> wallet = walletRepository.findById(id);
+        Optional<Wallet> wallet = walletRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(wallet);
     }
 

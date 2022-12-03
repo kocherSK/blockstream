@@ -3,6 +3,7 @@ package com.osttra.fx.blockstream.web.rest;
 import static com.osttra.fx.blockstream.web.rest.TestUtil.sameNumber;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -10,12 +11,18 @@ import com.osttra.fx.blockstream.IntegrationTest;
 import com.osttra.fx.blockstream.domain.Wallet;
 import com.osttra.fx.blockstream.repository.WalletRepository;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,6 +31,7 @@ import org.springframework.test.web.servlet.MockMvc;
  * Integration tests for the {@link WalletResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class WalletResourceIT {
@@ -39,6 +47,9 @@ class WalletResourceIT {
 
     @Autowired
     private WalletRepository walletRepository;
+
+    @Mock
+    private WalletRepository walletRepositoryMock;
 
     @Autowired
     private MockMvc restWalletMockMvc;
@@ -119,6 +130,24 @@ class WalletResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(wallet.getId())))
             .andExpect(jsonPath("$.[*].currencyCode").value(hasItem(DEFAULT_CURRENCY_CODE)))
             .andExpect(jsonPath("$.[*].amount").value(hasItem(sameNumber(DEFAULT_AMOUNT))));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllWalletsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(walletRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restWalletMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(walletRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllWalletsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(walletRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restWalletMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(walletRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test

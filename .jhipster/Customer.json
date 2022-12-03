@@ -8,7 +8,15 @@
   "entityTableName": "customer",
   "fields": [
     {
+      "fieldName": "customerName",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "customerLegalEntity",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "customerPassword",
       "fieldType": "String"
     },
     {

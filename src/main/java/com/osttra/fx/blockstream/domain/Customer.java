@@ -16,8 +16,14 @@ public class Customer implements Serializable {
     @Id
     private String id;
 
+    @Field("customer_name")
+    private String customerName;
+
     @Field("customer_legal_entity")
     private String customerLegalEntity;
+
+    @Field("customer_password")
+    private String customerPassword;
 
     @Field("customer_hash_code")
     private String customerHashCode;
@@ -37,6 +43,19 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
+    public String getCustomerName() {
+        return this.customerName;
+    }
+
+    public Customer customerName(String customerName) {
+        this.setCustomerName(customerName);
+        return this;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     public String getCustomerLegalEntity() {
         return this.customerLegalEntity;
     }
@@ -48,6 +67,19 @@ public class Customer implements Serializable {
 
     public void setCustomerLegalEntity(String customerLegalEntity) {
         this.customerLegalEntity = customerLegalEntity;
+    }
+
+    public String getCustomerPassword() {
+        return this.customerPassword;
+    }
+
+    public Customer customerPassword(String customerPassword) {
+        this.setCustomerPassword(customerPassword);
+        return this;
+    }
+
+    public void setCustomerPassword(String customerPassword) {
+        this.customerPassword = customerPassword;
     }
 
     public String getCustomerHashCode() {
@@ -87,7 +119,9 @@ public class Customer implements Serializable {
     public String toString() {
         return "Customer{" +
             "id=" + getId() +
+            ", customerName='" + getCustomerName() + "'" +
             ", customerLegalEntity='" + getCustomerLegalEntity() + "'" +
+            ", customerPassword='" + getCustomerPassword() + "'" +
             ", customerHashCode='" + getCustomerHashCode() + "'" +
             "}";
     }
