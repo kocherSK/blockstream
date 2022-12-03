@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -40,9 +39,8 @@ public class SmartTrade implements Serializable {
     @Field("value_date")
     private LocalDate valueDate;
 
-    @DBRef
-    @Field("customer")
-    private Customer customer;
+    @Field("transaction_id")
+    private String transactionId;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -150,17 +148,17 @@ public class SmartTrade implements Serializable {
         this.valueDate = valueDate;
     }
 
-    public Customer getCustomer() {
-        return this.customer;
+    public String getTransactionId() {
+        return this.transactionId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public SmartTrade customer(Customer customer) {
-        this.setCustomer(customer);
+    public SmartTrade transactionId(String transactionId) {
+        this.setTransactionId(transactionId);
         return this;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -194,6 +192,7 @@ public class SmartTrade implements Serializable {
             ", amount=" + getAmount() +
             ", contraAmount=" + getContraAmount() +
             ", valueDate='" + getValueDate() + "'" +
+            ", transactionId='" + getTransactionId() + "'" +
             "}";
     }
 }

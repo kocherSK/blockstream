@@ -34,6 +34,10 @@
     {
       "fieldName": "valueDate",
       "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "transactionId",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,
@@ -42,14 +46,6 @@
   "name": "SmartTrade",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [
-    {
-      "otherEntityField": "customerHashCode",
-      "otherEntityName": "customer",
-      "otherEntityRelationshipName": "smartTrade",
-      "relationshipName": "customer",
-      "relationshipType": "many-to-one"
-    }
-  ],
+  "relationships": [],
   "service": "no"
 }
